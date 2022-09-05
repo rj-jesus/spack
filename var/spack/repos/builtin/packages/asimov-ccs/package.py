@@ -55,4 +55,5 @@ class AsimovCcs(Package):
         make('CMP=%s' % spec.variants['cmp'].value, 'all')
 
         mkdirp(prefix.bin)
-        install(join_path(self.stage.source_path, 'ccs_app'), prefix.bin)
+        install('ccs_app', prefix.bin)
+        install_tree('tests', prefix.share.tests)
