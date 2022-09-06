@@ -47,13 +47,6 @@ class AsimovCcs(Package):
         env.set('PARHIP',    self.spec['kahip'].prefix)
 
     def install(self, spec, prefix):
-        env['CC'] = spec['mpi'].mpicc
-        env['CXX'] = spec['mpi'].mpicxx
-        env['F77'] = spec['mpi'].mpif77
-        env['FC'] = spec['mpi'].mpifc
-
         make('CMP=%s' % spec.variants['cmp'].value, 'all')
 
-        mkdirp(prefix.bin)
-        install('ccs_app', prefix.bin)
-        install_tree('tests', prefix.share.tests)
+        install_tree('.', prefix)
