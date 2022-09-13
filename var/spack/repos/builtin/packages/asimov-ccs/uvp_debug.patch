@@ -1,0 +1,71 @@
+diff --git a/src/case_setup/LidDrivenCavity/ldc.f90 b/src/case_setup/LidDrivenCavity/ldc.f90
+index 3c72c88..78831a7 100644
+--- a/src/case_setup/LidDrivenCavity/ldc.f90
++++ b/src/case_setup/LidDrivenCavity/ldc.f90
+@@ -149,36 +149,36 @@ program ldc
+   call solve_nonlinear(par_env, mesh, it_start, it_end, res_target, &
+                        u_sol, v_sol, w_sol, p_sol, u, v, p, p_prime, mf)
+ 
+-#ifndef EXCLUDE_MISSING_INTERFACE
+-  call PetscViewerBinaryOpen(PETSC_COMM_WORLD, "u", FILE_MODE_WRITE, viewer, ierr)
+-
+-  associate (vec => u%values)
+-    select type (vec)
+-    type is (vector_petsc)
+-      call VecView(vec%v, viewer, ierr)
+-    end select
+-  end associate
+-
+-  call PetscViewerBinaryOpen(PETSC_COMM_WORLD, "v", FILE_MODE_WRITE, viewer, ierr)
+-
+-  associate (vec => v%values)
+-    select type (vec)
+-    type is (vector_petsc)
+-      call VecView(vec%v, viewer, ierr)
+-    end select
+-  end associate
+-
+-  call PetscViewerBinaryOpen(PETSC_COMM_WORLD, "p", FILE_MODE_WRITE, viewer, ierr)
+-
+-  associate (vec => p%values)
+-    select type (vec)
+-    type is (vector_petsc)
+-      call VecView(vec%v, viewer, ierr)
+-    end select
+-  end associate
+-
+-  call PetscViewerDestroy(viewer, ierr)
+-#endif
++! #ifndef EXCLUDE_MISSING_INTERFACE
++!   call PetscViewerBinaryOpen(PETSC_COMM_WORLD, "u", FILE_MODE_WRITE, viewer, ierr)
++!
++!   associate (vec => u%values)
++!     select type (vec)
++!     type is (vector_petsc)
++!       call VecView(vec%v, viewer, ierr)
++!     end select
++!   end associate
++!
++!   call PetscViewerBinaryOpen(PETSC_COMM_WORLD, "v", FILE_MODE_WRITE, viewer, ierr)
++!
++!   associate (vec => v%values)
++!     select type (vec)
++!     type is (vector_petsc)
++!       call VecView(vec%v, viewer, ierr)
++!     end select
++!   end associate
++!
++!   call PetscViewerBinaryOpen(PETSC_COMM_WORLD, "p", FILE_MODE_WRITE, viewer, ierr)
++!
++!   associate (vec => p%values)
++!     select type (vec)
++!     type is (vector_petsc)
++!       call VecView(vec%v, viewer, ierr)
++!     end select
++!   end associate
++!
++!   call PetscViewerDestroy(viewer, ierr)
++! #endif
+ 
+   ! Clean-up
+   deallocate (u)
