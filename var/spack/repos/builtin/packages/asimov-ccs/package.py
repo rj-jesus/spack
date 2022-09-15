@@ -23,15 +23,17 @@ class AsimovCcs(Package):
     version('20220908', commit='fbdaa943292a1077a68122436399c58334b0f654')
     version('0.2.1', sha256='de69819b6aa48515ffb33e6d36dfc01c795ebdc0133ee9c35a0182253d3690a6')
 
-    # note: this could be picked up from the environment, or at least raise a
-    # conflict if the wrong compiler is being used
-    variant('cmp', default='gnu', description='Compilation environment',
-                   values=('cray', 'gnu', 'intel'), multi=False)
-
     variant('uvp_debug', default=False, description='Generates u, v and p files for debug')
 
     # Comment out code that generates u, v and p files
     patch('uvp_debug.patch', when='~uvp_debug')
+
+    # Supported compilers and corresponding build option
+    compilers = {
+        'gcc': 'gnu',
+        'cce': 'cray',
+        'intel': 'intel',
+    }
 
     depends_on('mpi')
     depends_on('petsc@3.14.2')
@@ -53,6 +55,7 @@ class AsimovCcs(Package):
         env.set('PARHIP',    self.spec['kahip'].prefix)
 
     def install(self, spec, prefix):
-        make('CMP=%s' % spec.variants['cmp'].value, 'all')
+        compiler = self.compilers[spec.compiler.name]
+        make('CMP=%s' % compiler, 'all')
 
         install_tree('.', prefix)
