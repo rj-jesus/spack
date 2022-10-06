@@ -175,6 +175,9 @@ class Adios2(CMakePackage, CudaPackage):
         sha256="8221073d1b2f8944395a88a5d60a15c7370646b62f5fc6309867bbb6a8c2096c",
     )
 
+    # Change order of compilation of fortran files
+    patch('fix-nvhpc-fortran.patch', when='%nvhpc')
+
     @when("%fj")
     def patch(self):
         """add fujitsu mpi commands #16864"""

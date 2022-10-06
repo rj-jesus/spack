@@ -16,7 +16,7 @@ class FortranYamlCpp(CMakePackage):
 
     maintainers = ['rj-jesus']
 
-    version('main', branch='main')
+    version('main', branch='main', submodules=True, preferred=True)
 
     variant('shared', default=True, description='Builds a shared version of the library')
 
@@ -27,6 +27,10 @@ class FortranYamlCpp(CMakePackage):
             filter_file(r'add_library(fortran-yaml-cpp yaml_types.f90 yaml.f90 yaml.cpp)',
                         r'add_library(fortran-yaml-cpp SHARED yaml_types.f90 yaml.f90 yaml.cpp)',
                         'CMakeLists.txt', string=True)
+
+        if '%nvhpc' in self.spec:
+            filter_file(r'-Weffc++', r'', 'yaml-cpp/CMakeLists.txt', string=True)
+            filter_file(r'-pedantic-errors', r'', 'yaml-cpp/CMakeLists.txt', string=True)
 
     def cmake_args(self):
         args = []

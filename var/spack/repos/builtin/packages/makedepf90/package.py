@@ -18,3 +18,7 @@ class Makedepf90(AutotoolsPackage):
 
     version('latest', branch='debian/latest')
     version('3.0.0-2', sha256='7e7b54aba06e58183e9473a437d90fa06a0dc295287a9080e28b3d754e1b79a8')
+
+    def patch(self):
+        if '%nvhpc' in self.spec:
+            filter_file(r'$(CC) -MM *.c > .depend', r'$(CC) -MM *.c > .depend || test -s .depend', 'Makefile.in', string=True)
