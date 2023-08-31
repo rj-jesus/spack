@@ -20,6 +20,7 @@ class AsimovCcs(Package):
     maintainers = ['rj-jesus']
 
     version('develop', branch='develop')
+    version('0.4', commit='fe50cdd0abfa5887a47fe0efe714cf1811dfe55b')
     version('20220908', commit='fbdaa943292a1077a68122436399c58334b0f654')
     version('0.2.1', sha256='de69819b6aa48515ffb33e6d36dfc01c795ebdc0133ee9c35a0182253d3690a6')
 
@@ -36,10 +37,10 @@ class AsimovCcs(Package):
     }
 
     depends_on('mpi')
-    depends_on('petsc@3.14.2')
+    depends_on('petsc@3.17:')
     depends_on('adios2+hdf5')
     depends_on('kahip')
-    depends_on('fortran-yaml-cpp')
+    depends_on('fortran-yaml-c')
 
     depends_on('makedepf90', type='build')
     depends_on('py-pyyaml', type='build')
@@ -50,7 +51,7 @@ class AsimovCcs(Package):
     def setup_build_environment(self, env):
         env.set('CCS_DIR',   self.stage.source_path)
         env.set('PETSC_DIR', self.spec['petsc'].prefix)
-        env.set('FYAML',     self.spec['fortran-yaml-cpp'].prefix)
+        env.set('FYAML',     self.spec['fortran-yaml-c'].prefix)
         env.set('ADIOS2',    self.spec['adios2'].prefix)
         env.set('PARHIP',    self.spec['kahip'].prefix)
 
